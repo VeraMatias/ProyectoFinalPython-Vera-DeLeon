@@ -1,0 +1,23 @@
+{% extends "padre.html" %}
+
+{% block contenido %}
+
+<h1>ABUELA LALALA</h1>
+
+<form action="{% url '_registro' %}" method="POST"> {% csrf_token %}
+
+    <table>
+    
+        {{ form.as_table }}
+    
+    </table>
+    
+    <input type="submit" value="REGISTRARSE">
+    
+    
+</form>
+
+
+    
+
+{% endblock %}
