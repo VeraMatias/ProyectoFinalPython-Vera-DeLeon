@@ -33,7 +33,7 @@
 <header class="navigation">
 	<nav class="navbar navbar-expand-lg  py-4" id="navbar">
 		<div class="container">
-		<a class="navbar-brand" href="index.html">
+		<a class="navbar-brand" href="{% url '_inicio' %}">
 		Ultra<span>Blog</span>
 		</a>
 
@@ -46,12 +46,20 @@
 				<a class="nav-link" href="index.html">Inicio <span class="sr-only">(current)</span></a>
 			</li>
 			<li class="nav-item"><a class="nav-link" href="service.html">Sobre Nosotros</a></li>
+			
+			{% if user.is_authenticated %}
+            <li class="nav-item">Hola {{ user.username }}</p></li><p> 
+                
+            <a class="btn btn-solid-border btn-round-full" href="{% url '_logout' %}">Desloguearme</a>
+            {% else %}
 			<form class="form-lg-inline my-2 my-md-0 ml-lg-4 text-center">
-			<a href="contact.html" class="btn btn-solid-border btn-round-full">Ingresar</a>
+			<a href="{% url '_ingreso' %}" class="btn btn-solid-border btn-round-full">Ingresar</a>
 			</form>
 			<form class="form-lg-inline my-2 my-md-0 ml-lg-4 text-center">
 			<a href= "{% url '_registro' %}" class="btn btn-solid-border btn-round-full">Registrarse</a>
 			</form>
+			{% endif %}
+
 		</div>
 		</div>
 	</nav>
