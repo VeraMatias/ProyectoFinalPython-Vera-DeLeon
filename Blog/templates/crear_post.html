@@ -1,0 +1,21 @@
+{% extends "padre.html" %}
+
+{% block contenido %}
+
+<h1>CREAR POST</h1>
+
+
+<h1>post de {{ user.username }} </h1>
+
+<form action="{% url '_crearpost' %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+    <table>
+        {{ form.as_table }}
+    
+    </table>
+    
+    <input type="submit" class="btn btn-solid-border btn-round-full" value="Crear">
+    
+    
+</form>
+
+{% endblock %}

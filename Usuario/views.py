@@ -43,3 +43,6 @@ def login_request(request):
     else:
         form = AuthenticationForm()
     return render(request, "ingresousuario.html", {"form":form})
+
+def perfil(request):
+    return render(request, "perfil.html")
