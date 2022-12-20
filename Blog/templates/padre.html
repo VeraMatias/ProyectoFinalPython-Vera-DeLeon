@@ -50,6 +50,7 @@
 			<li class="nav-item"><a class="nav-link" href="service.html">Sobre Nosotros</a></li>
 			
 			{% if user.is_authenticated %}
+				<li class="nav-item"><img style="border-radius: 50%; height: 48px; object-fit: cover; object-position: center; width: 48px;" src="{{ imagen }}" alt=""></li>
 				<li class="nav-item"><a class="nav-link" href="{% url '_perfil' %}">Hola {{ user.username }}</a></li> 
 					
 				<a class="btn btn-solid-border btn-round-full" href="{% url '_logout' %}">Desloguearme</a>

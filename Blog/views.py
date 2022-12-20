@@ -1,10 +1,22 @@
 from django.shortcuts import render
 from .forms import *
+from Usuario.models import Avatar
+from Usuario.views import obtenerAvatar
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate
 
 # Create your views here.
 
+#@login_required
 def inicio(request):
-    return render(request, "index.html")
+    if request.user.is_authenticated:
+        lista=Avatar.objects.filter(user=request.user)
+        return render (request, "index.html", {"imagen":obtenerAvatar(request)})
+        
+    else:
+        return render (request, "index.html")
+   
+    
 
 def crear_post(request):
     if request.method=="POST":
