@@ -51,6 +51,7 @@
 			<li class="nav-item"><a class="nav-link" href="service.html">Sobre Nosotros</a></li>
 			
 			{% if user.is_authenticated %}
+				<li class="nav-item"><img style="border-radius: 50%; height: 48px; object-fit: cover; object-position: center; width: 48px;" src="{{ avatar }}" alt=""></li>
 				<li class="nav-item"><a class="nav-link" href="{% url '_perfil' %}">Hola {{ user.username }}</a></li> 
 					
 				<a class="btn btn-solid-border btn-round-full" href="{% url '_logout' %}">Desloguearme</a>
@@ -108,10 +109,10 @@
 		<h5>Ultimos Posts</h5>	
 		{% for reciente in recientes%}
         <div class="media border-bottom py-3">
-            <a href="#"><img class="mr-4" src="images/blog/bt-3.jpg" alt=""></a>
+            <a href="#"><img class="mr-4" src="" alt=""></a>
             <div class="media-body">
                 <h6 class="my-2"><a href="{% url '_post' reciente.id %}">{{reciente.titulo}}</a></h6>
-                <span class="text-sm text-muted">{{reciente.fecha}}</span>
+                <span class="text-sm text-muted">{{reciente.fecha|date:'Y-m-d H:i'}}</span>
 				<span class="text-sm text-muted">{{reciente.autor}}</span>
             </div>
         </div>
@@ -161,9 +162,9 @@
     Essential Scripts
     =====================================-->
 
-    <!-- Bootstrap 4.3.1 -->
+    <!-- Bootstrap 4.3.1 
     <script src="{% static 'plugins/bootstrap/js/popper.js' %}"></script>
     <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
-
+	-->
 </body>
 </html>

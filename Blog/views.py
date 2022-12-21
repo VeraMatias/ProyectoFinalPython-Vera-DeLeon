@@ -2,12 +2,19 @@ from django.shortcuts import render
 from .forms import *
 from .models import Post
 from datetime import datetime
+from django.core.paginator import Paginator
+
 # Create your views here.
 
+#@login_required
 def inicio(request):
-    recientes = Post.objects.all().order_by('-fecha')[:5]
+    post = Post.objects.all().order_by('-fecha')
+    paginator = Paginator(post, 6)
 
-    return render(request, "index.html", {"recientes": recientes})
+    numero_pagina = request.GET.get('page')
+    post_por_pagina = paginator.get_page(numero_pagina)
+
+    return render (request, "index.html", {"post_pagina": post_por_pagina})
 
 def crear_post(request):
     if request.method=="POST":
@@ -39,7 +46,7 @@ def post(request, id):
 def buscar_post(request):
     if request.GET["busq_titulo"]:
 
-        resultado_busqueda=Post.objects.filter(titulo__icontains=request.GET["busq_titulo"])
+        resultado_busqueda=Post.objects.filter(titulo__icontains=request.GET["busq_titulo"]).order_by('-fecha')
         return render(request,"buscar_post.html",{"resultado_busqueda": resultado_busqueda})
 
     else:

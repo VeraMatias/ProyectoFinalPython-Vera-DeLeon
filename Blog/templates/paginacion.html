@@ -1,0 +1,26 @@
+
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-6 text-center">
+        <nav class="navigation pagination d-inline-block">
+            <div class="nav-links">
+                {% if page_obj.has_previous %}
+                <a class="prev page-numbers" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+                {% endif %} 
+
+                {% for i in page_obj.paginator.page_range %}
+                    {% if i == page_obj.number %}
+                        <span aria-current="page" class="page-numbers current">{{ i }}</span>
+                    {% else %}
+                        <a class="page-numbers" href="?page={{ i }}">{{ i }}</a>
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <a class="next page-numbers" href="?page={{ page_obj.next_page_number }}">next</a>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+</div>
+
+    
