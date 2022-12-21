@@ -1,0 +1,40 @@
+{% extends "padre.html" %}
+
+{% block contenido %}
+
+<h1>Resultado de la Busqueda</h1>
+
+{% if resultado_busqueda %}
+
+<section class="section blog-wrap bg-gray">
+    <div class="container">
+        <div class="row">
+
+        {% for resultado in resultado_busqueda %}
+        <div class="col-lg-6 col-md-6 mb-5">
+            <div class="blog-item">
+                <img src="/{{ resultado.imagen }}" onerror="this.src='/media/defecto.jpg';" class="img-fluid rounded">
+                <div class="blog-item-content bg-white p-5">
+                    <div class="blog-item-meta bg-gray py-1 px-2">
+                        <span class="text-muted text-capitalize mr-3"><i class="ti-pencil-alt mr-2"></i>{{resultado.autor}}</span>
+                        <span class="text-black text-capitalize mr-3"><i class="ti-time mr-1"></i>{{resultado.fecha}}</span>
+                    </div> 
+                    <h3 class="mt-3 mb-3"><a href="{% url '_post' resultado.id %}">{{resultado.titulo}}</a></h3>
+                    <p class="mb-4">{{resultado.subtitulo}}</p>
+
+                    <a href="{% url '_post' resultado.id %}" class="btn btn-small btn-main btn-round-full">Leer Mas</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}   
+</div>
+
+</section>
+
+
+
+{% else %}
+    <h5 class="fw-bolder">NO HAY POST CON ESE TITULO</h5>
+{% endif %}
+
+{% endblock %}

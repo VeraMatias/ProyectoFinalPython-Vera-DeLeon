@@ -4,6 +4,7 @@
 {% load static %}
 <script type="text/javascript" src="{% static 'ckeditor/ckeditor-init.js' %}"> </script>
 <script type="text/javascript" src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"> </script>
+
 <!-- Required meta tags -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -84,7 +85,6 @@
 
 
 {% endblock %}
-{{ mensaje }}
 </div>
 			
 	<div class="col-lg-4">
@@ -95,39 +95,27 @@
 		{% endif %}
 		</div>
 
-	<div class="sidebar-widget search card p-4 mb-3 border-0">
-		
-		<h5 class="mb-4">Buscar</h5>
-		<input type="text" class="form-control" placeholder="Título del post">
-		<a href="#" class="btn btn-mian btn-small d-block mt-2">Buscar</a>
-	</div>
+	<form action="{% url '_buscarpost' %}" method="GET"> {% csrf_token %}
+		<div class="sidebar-widget search card p-4 mb-3 border-0">
+			<h5 class="mb-4">Buscar</h5>
+			<input type="text" class="form-control" placeholder="Título del post" name="busq_titulo" required id="busq_titulo">
+
+			<input type="submit" class="btn btn-mian btn-small d-block mt-2" style="width : 100%" value="Buscar">
+		</div>	
+	</form>
 
 	<div class="sidebar-widget latest-post card border-0 p-4 mb-3">
 		<h5>Ultimos Posts</h5>	
+		{% for reciente in recientes%}
         <div class="media border-bottom py-3">
             <a href="#"><img class="mr-4" src="images/blog/bt-3.jpg" alt=""></a>
             <div class="media-body">
-                <h6 class="my-2"><a href="#">%titulo</a></h6>
-                <span class="text-sm text-muted">%fecha</span>
-				<span class="text-sm text-muted">%autor</span>
+                <h6 class="my-2"><a href="{% url '_post' reciente.id %}">{{reciente.titulo}}</a></h6>
+                <span class="text-sm text-muted">{{reciente.fecha}}</span>
+				<span class="text-sm text-muted">{{reciente.autor}}</span>
             </div>
         </div>
-
-        <div class="media border-bottom py-3">
-            <a href="#"><img class="mr-4" src="images/blog/bt-2.jpg" alt=""></a>
-            <div class="media-body">
-                <h6 class="my-2"><a href="#">Vivamus molestie gravida turpis.</a></h6>
-                <span class="text-sm text-muted">03 Mar 2018</span>
-            </div>
-        </div>
-
-        <div class="media py-3">
-            <a href="#"><img class="mr-4" src="images/blog/bt-1.jpg" alt=""></a>
-            <div class="media-body">
-                <h6 class="my-2"><a href="#">Fusce lobortis lorem at ipsum semper sagittis</a></h6>
-                <span class="text-sm text-muted">03 Mar 2018</span>
-            </div>
-        </div>
+		{% endfor %}
 	</div>
 
 	<div class="sidebar-widget bg-white rounded tags p-4 mb-3">
@@ -173,26 +161,9 @@
     Essential Scripts
     =====================================-->
 
-    
-    <!-- Main jQuery -->
-    <script src="plugins/jquery/jquery.js"></script>
-    <script src="js/contact.js"></script>
     <!-- Bootstrap 4.3.1 -->
-    <script src="plugins/bootstrap/js/popper.js"></script>
-    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
-    <!--  Magnific Popup-->
-    <script src="plugins/magnific-popup/dist/jquery.magnific-popup.min.js"></script>
-    <!-- Slick Slider -->
-    <script src="plugins/slick-carousel/slick/slick.min.js"></script>
-    <!-- Counterup -->
-    <script src="plugins/counterup/jquery.waypoints.min.js"></script>
-    <script src="plugins/counterup/jquery.counterup.min.js"></script>
-
-    <!-- Google Map -->
-    <script src="plugins/google-map/map.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAkeLMlsiwzp6b3Gnaxd86lvakimwGA6UA&callback=initMap"></script>    
-    
-    <script src="js/script.js"></script>
+    <script src="{% static 'plugins/bootstrap/js/popper.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.min.js' %}"></script>
 
 </body>
 </html>
