@@ -14,6 +14,8 @@
 
 <title>UltraBlog</title>
 
+<link href="{% static 'css/styles_chat.css' %}"rel="stylesheet" />
+
 <!-- bootstrap.min css -->
 <link rel="stylesheet" href="{% static 'plugins/bootstrap/css/bootstrap.min.css' %}">
 <!-- Icon Font Css -->
@@ -51,6 +53,7 @@
 			<li class="nav-item"><a class="nav-link" href="service.html">Sobre Nosotros</a></li>
 			
 			{% if user.is_authenticated %}
+				<li class="nav-item"><a class="nav-link" href="{% url '_iniciochat' %}">CHAT</a></li>
 				<li class="nav-item"><img style="border-radius: 50%; height: 48px; object-fit: cover; object-position: center; width: 48px;" src="{{ avatar }}" alt=""></li>
 				<li class="nav-item"><a class="nav-link" href="{% url '_perfil' %}">Hola {{ user.username }}</a></li> 
 					
@@ -113,7 +116,7 @@
             <div class="media-body">
                 <h6 class="my-2"><a href="{% url '_post' reciente.id %}">{{reciente.titulo}}</a></h6>
                 <span class="text-sm text-muted">{{reciente.fecha|date:'Y-m-d H:i'}}</span>
-				<span class="text-sm text-muted">{{reciente.autor}}</span>
+				<a href = "{% url '_perfil'%}" class="text-sm text-muted">{{reciente.autor}}</a>
             </div>
         </div>
 		{% endfor %}

@@ -1,0 +1,16 @@
+{% extends "padre.html" %}
+
+{% block contenido %}
+
+<h1>CREAR CHAT</h1>
+
+<form action="{% url '_nuevochat' %}" method="POST"> {% csrf_token %}
+    <table >
+        {{ form.as_table }}
+    </table>
+    <input type="submit" class="btn btn-solid-border btn-round-full" value="Crear">
+    
+</form>
+{{mensaje}}
+
+{% endblock %}

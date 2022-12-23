@@ -1,0 +1,92 @@
+{% extends "padre.html" %}
+
+{% block contenido %}
+
+<h1>CHAT</h1>
+
+
+<div class="container">
+<div class="row clearfix">
+    <div class="col-lg-12">
+        <div class="card chat-app">
+            <div id="plist" class="people-list">
+                <div class="input-group">
+                    <a class="btn btn-solid-border btn-round-full" href="{% url '_nuevochat' %}">Nuevo Chat</a>
+                </div>
+                <ul class="list-unstyled chat-list mt-2 mb-0">
+                    {% for usuario in usuarios %}
+                        <li class="clearfix">
+                            <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
+                            <div class="about">
+                                <div class="name">{{usuario.username}}</div>                                            
+                            </div>
+                        </li>
+
+                        <li>
+                            <form action="{% url '_iniciochat' %}" method="POST"> {% csrf_token %}
+                                <input id = "receptor_id" name="receptor_id" type="text" value="{{usuario.id}}" style="display: none;">
+                                <input type="submit" class="btn btn-solid-border btn-round-full" value="chats">
+                            </form>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="chat">
+                {% if historial %}
+                    <div class="chat-header clearfix">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
+                                </a>
+                                <div class="chat-about">
+                                    <h6 class="m-b-0">{{usuario_chat}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% for mensaje in historial%}
+                    <div class="chat-history">
+                        <ul class="m-b-0">
+                            {% if mensaje.receptor.id == user.id %}
+                                <li class="clearfix">
+                                    <div class="message-data text-right">
+                                        <span class="message-data-time">{{mensaje.fecha}}</span>
+                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+                                    </div>
+                                    <div class="message other-message float-right"> {{mensaje.mensaje}} </div>
+                                </li>
+                            {% else %}
+                            <li class="clearfix">
+                                <div class="message-data">
+                                    <span class="message-data-time">{{mensaje.fecha}}</span>
+                                </div>
+                                <div class="message my-message">{{mensaje.mensaje}}</div>                                    
+                            </li>   
+                            {% endif %}                            
+                        </ul>
+                    </div>
+                    {% endfor %}
+                    <div class="chat-message clearfix">
+                        <div class="input-group mb-0">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-send"></i></span>
+                            </div>
+                            <form action="{% url '_enviarmsj' %}" method="POST"> {% csrf_token %}
+                                <input id = "receptor" name="receptor" type="text" value="{{usuario_chat.id}}" style="display: none;">
+                                <input id = "mensaje" name = "mensaje" type="text" class="form-control" placeholder="Enter text here...">  
+                                <input type="submit" class="btn btn-solid-border btn-round-full" value="Enviar">                               
+                            </form>                                    
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            
+        </div>
+    </div>
+</div>
+</div>
+
+
+{% endblock %}

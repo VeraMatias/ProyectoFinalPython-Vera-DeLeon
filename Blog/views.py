@@ -20,8 +20,6 @@ def crear_post(request):
         form=PostForm(request.POST, request.FILES)
         if form.is_valid():
             informacion=form.cleaned_data
-            print(informacion)
-
             Post_a_Cargar=Post(titulo=informacion["titulo"],subtitulo=informacion["subtitulo"], cuerpo= informacion["cuerpo"], autor =request.user,fecha = datetime.now(),imagen=request.FILES["imagen"], categoria = informacion["categoria"])
 
             Post_a_Cargar.save()
