@@ -1,0 +1,18 @@
+{% extends "padre.html" %}
+
+{% block contenido %}
+
+<h1>EDITAR POST</h1>
+{% if mensaje %}
+    {{mensaje}}
+{%else%}
+<form action="{% url '_editarpost' post.id %}" method="POST" enctype="multipart/form-data"> {% csrf_token %}
+    <table >
+        {{ form.as_table }}
+    </table>
+
+    <input type="submit" class="btn btn-solid-border btn-round-full" value="Editar">
+    
+</form>
+{%endif%}
+{% endblock %}

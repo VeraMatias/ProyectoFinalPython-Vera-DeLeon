@@ -20,6 +20,12 @@ def ObtenerUsuarios(chats,Userid):
                 usuarios.append(elemento[1])
     return usuarios
 
+def MarcarLeidos(mensajes):
+    for mensaje in mensajes:
+        mensaje.leido = True
+        mensaje.save()
+    return mensajes
+
 
 # Create your views here.
 
@@ -43,13 +49,13 @@ def inicio(request):
             usuario_chat = User.objects.filter(id = receptor_id).first()
 
             #Obtengo el historial de charla con el user
-            print(request.user.id)
-            print(receptor_id)
+            #historial = Mensaje.objects.filter(emisor__id=request.user.id, receptor__id = receptor_id)
+            #historial |= Mensaje.objects.filter(emisor__id=receptor_id, receptor__id=request.user.id)
 
-
-            historial = Mensaje.objects.filter(emisor__id=request.user.id, receptor__id = receptor_id)
-            historial |= Mensaje.objects.filter(emisor__id=receptor_id, receptor__id=request.user.id)
-
+            historial = Mensaje.objects.filter(emisor__id=receptor_id, receptor__id=request.user.id) #mensajes recibidos
+            historial = MarcarLeidos(historial)
+            historial |= Mensaje.objects.filter(emisor__id=request.user.id, receptor__id = receptor_id) #agrego mensajes recibidos
+            
             historial.order_by("-fecha")
 
             return render(request , "inicio_chat.html", {"usuarios": usuarios, "historial": historial, "usuario_chat": usuario_chat})

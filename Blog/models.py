@@ -17,7 +17,7 @@ class Post(models.Model):
     ("Juegos", "Juegos"),
     ("Viajes", "Viajes"),
     ("Salud", "Salud"),
-    ("Eventos", "Eveentos"),
+    ("Eventos", "Eventos"),
     ("Varios", "Varios"),
     )
 

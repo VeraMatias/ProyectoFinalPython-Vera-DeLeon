@@ -18,7 +18,7 @@
                         <li class="clearfix">
                             <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar">
                             <div class="about">
-                                <div class="name">{{usuario.username}}</div>                                            
+                                <div class="name">{{usuario.username}}</div>                                           
                             </div>
                         </li>
 
@@ -42,6 +42,7 @@
                                 </a>
                                 <div class="chat-about">
                                     <h6 class="m-b-0">{{usuario_chat}}</h6>
+                                    <small>Ultima Conexión: {{usuario_chat.last_login|date:'Y-m-d H:i'}}</small>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +63,11 @@
                                 <div class="message-data">
                                     <span class="message-data-time">{{mensaje.fecha}}</span>
                                 </div>
-                                <div class="message my-message">{{mensaje.mensaje}}</div>                                    
+                                {%if mensaje.leido == False %}
+                                    <div class="message my-message">{{mensaje.mensaje}}<small style="color: gray;">✔ ✔</small> </div>
+                                {% else %}
+                                    <div class="message my-message">{{mensaje.mensaje}}<small style="color: blue;">✔ ✔</small> </div>       
+                                {% endif %}                             
                             </li>   
                             {% endif %}                            
                         </ul>

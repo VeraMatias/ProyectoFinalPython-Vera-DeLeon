@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .forms import *
 from .models import Post
 from datetime import datetime
@@ -23,7 +23,8 @@ def crear_post(request):
             Post_a_Cargar=Post(titulo=informacion["titulo"],subtitulo=informacion["subtitulo"], cuerpo= informacion["cuerpo"], autor =request.user,fecha = datetime.now(),imagen=request.FILES["imagen"], categoria = informacion["categoria"])
 
             Post_a_Cargar.save()
-            return render (request, "index.html")
+            #return render (request, "index.html")
+            return redirect('/')
         else:
             return render(request, "crear_post.html", {"form":form})
     else:
@@ -46,3 +47,37 @@ def buscar_post(request):
         return render(request,"buscar_post.html",{"resultado_busqueda": resultado_busqueda})
     else:
         return render(request, "buscar_post.html")
+
+def editar_post(request,id):
+    post=Post.objects.get(id=id)
+    if (request.user.id == post.autor.id) or request.user.is_superuser:
+        if request.method=="POST":
+
+            form=PostEditForm(request.POST, request.FILES)
+
+            print(form)
+            if form.is_valid():
+                info=form.cleaned_data
+                post.titulo=info["titulo"]           
+                post.subtitulo=info["subtitulo"]
+                post.cuerpo=info["cuerpo"]
+                post.categoria = info["categoria"]
+                if len(request.FILES) != 0:
+                    post.imagen=request.FILES["imagen"]
+                post.save()
+                return redirect('/')
+            else:
+                return render(request, "editar_post.html", {"form":form, "mensaje":"Error al editar el post", "post":post})
+        else:
+            form= PostForm(initial={"titulo":post.titulo, "subtitulo":post.subtitulo, "cuerpo":post.cuerpo, "imagen":post.imagen, "categoria":post.categoria})
+            return render(request, "editar_post.html", {"form":form, "post":post})
+    else:
+        return render(request, "editar_post.html", {"mensaje":"Usted no es el Autor de este Post.", "post":post})
+
+def eliminar_post(request, id):
+    post=Post.objects.get(id=id)
+    if (request.user.id == post.autor.id) or request.user.is_superuser:
+        post.delete()
+        return redirect('/')
+    else:
+        return redirect('/')

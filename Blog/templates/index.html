@@ -21,9 +21,14 @@
                     <p class="mb-4">{{post.subtitulo}}</p>
 
                     <a href="{% url '_post' post.id %}" class="btn btn-small btn-main btn-round-full">Leer Mas</a>
+                    {% if user.is_superuser %}
+                        <a class="btn btn-small btn-main btn-round-full" href="{% url '_editarpost' post.id %}">Editar</a>
+                        <a class="btn btn-small btn-main btn-round-full" href="{% url '_eliminarpost' post.id %}">Eliminar</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
+        
         {% endfor %}  
         
         
