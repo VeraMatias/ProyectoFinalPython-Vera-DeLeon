@@ -28,6 +28,7 @@
 
 <!-- Main Stylesheet -->
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="stylesheet" href="{% static 'css/style_propio.css' %}">
 
 </head>
 
@@ -93,13 +94,13 @@
 			
 	<div class="col-lg-4">
 	<div class="sidebar-wrap">
-		<div class="card mb-3 border-0">
+		<div class="card mb-3 border-0" >
 		{% if user.is_authenticated %}			
-			<a class="btn btn-solid-border btn-round-full" href="{% url '_crearpost' %}">Crear Post</a>
+			<a class="btn btn-solid-border btn-round-full"  href="{% url '_crearpost' %}">Crear Post</a>
 		{% endif %}
 		</div>
 
-	<form action="{% url '_buscarpost' %}" method="GET"> {% csrf_token %}
+	<form action="{% url '_buscarpost' %}" method="GET"> 
 		<div class="sidebar-widget search card p-4 mb-3 border-0">
 			<h5 class="mb-4">Buscar</h5>
 			<input type="text" class="form-control" placeholder="Título del post" name="busq_titulo" required id="busq_titulo">
@@ -124,12 +125,34 @@
 
 	<div class="sidebar-widget bg-white rounded tags p-4 mb-3">
 		<h5 class="mb-4">Categorías</h5>
-		<a href="#">Fútbol</a>
-		<a href="#">Juegos</a>
-		<a href="#">Viajes</a>
-		<a href="#">Salud</a>
-		<a href="#">Eventos</a>
-		<a href="#">Varios</a>
+		<div class="grid-categoria">
+			<form action="{% url '_buscarcategoria' %}" method="GET"> 
+				<input id = "categoria" name="categoria" type="text" value="Futbol" style="display: none;">
+				<input class = "boton-categoria" type="submit"  style="width : 100%" value="Futbol">
+			</form>
+			<form action="{% url '_buscarcategoria' %}" method="GET"> 
+				<input id = "categoria" name="categoria" type="text" value="Juegos" style="display: none;">
+				<input class = "boton-categoria" type="submit"  style="width : 100%" value="Juegos">
+			</form>
+			<form action="{% url '_buscarcategoria' %}" method="GET"> 
+				<input id = "categoria" name="categoria" type="text" value="Viajes" style="display: none;">
+				<input class = "boton-categoria" type="submit"  style="width : 100%" value="Viajes">
+			</form>
+			<form action="{% url '_buscarcategoria' %}" method="GET"> 
+				<input id = "categoria" name="categoria" type="text" value="Salud" style="display: none;">
+				<input class = "boton-categoria" type="submit"  style="width : 100%" value="Salud">
+			</form>
+			<form action="{% url '_buscarcategoria' %}" method="GET"> 
+				<input id = "categoria" name="categoria" type="text" value="Eventos" style="display: none;">
+				<input class = "boton-categoria" type="submit"  style="width : 100%" value="Eventos">
+			</form>
+			<form action="{% url '_buscarcategoria' %}" method="GET"> 
+				<input id = "categoria" name="categoria" type="text" value="Varios" style="display: none;">
+				<input class = "boton-categoria" type="submit"  style="width : 100%" value="Varios">
+			</form>
+
+		</div>
+
 	</div>
 </section>
 

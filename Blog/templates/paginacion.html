@@ -3,10 +3,11 @@
     <div class="col-lg-6 text-center">
         <nav class="navigation pagination d-inline-block">
             <div class="nav-links">
+                <!-- Apretamos sobre boton "Prev" --> 
                 {% if page_obj.has_previous %}
                 <a class="prev page-numbers" href="?page={{ page_obj.previous_page_number }}">Prev</a>
                 {% endif %} 
-
+                <!-- Se cargan los distintos numeros de pagina --> 
                 {% for i in page_obj.paginator.page_range %}
                     {% if i == page_obj.number %}
                         <span aria-current="page" class="page-numbers current">{{ i }}</span>
@@ -14,7 +15,7 @@
                         <a class="page-numbers" href="?page={{ i }}">{{ i }}</a>
                     {% endif %}
                 {% endfor %}
-
+                <!-- Apretamos sobre boton "Next" --> 
                 {% if page_obj.has_next %}
                     <a class="next page-numbers" href="?page={{ page_obj.next_page_number }}">next</a>
                 {% endif %}

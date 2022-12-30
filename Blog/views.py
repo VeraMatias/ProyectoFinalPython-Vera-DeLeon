@@ -3,18 +3,20 @@ from .forms import *
 from .models import Post
 from datetime import datetime
 from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 def inicio(request):
 
         post = Post.objects.all().order_by('-fecha')
-        paginator = Paginator(post, 6)
+        paginator = Paginator(post, 6) #(objetos a subdividir, cantidad de muestras por pagina)
 
-        numero_pagina = request.GET.get('page')
-        post_por_pagina = paginator.get_page(numero_pagina)
-        return render (request, "index.html", {"post_pagina": post_por_pagina})
+        numero_pagina = request.GET.get('page') #obtencion de la pagina
+        post_por_pagina = paginator.get_page(numero_pagina) # extraccion de los post de dicha pagina
+        return render (request, "index.html", {"post_pagina": post_por_pagina}) 
 
+@login_required
 def crear_post(request):
     if request.method=="POST":
         form=PostForm(request.POST, request.FILES)
@@ -48,6 +50,15 @@ def buscar_post(request):
     else:
         return render(request, "buscar_post.html")
 
+def buscar_categoria(request):
+    if request.GET["categoria"]:
+        categoria_recibida = str(request.GET["categoria"])
+        resultado_busqueda=Post.objects.filter(categoria=categoria_recibida.upper()).order_by('-fecha')
+        return render(request,"buscar_categoria.html",{"resultado_busqueda": resultado_busqueda})
+    else:
+        return render(request, "buscar_categoria.html")
+
+@login_required
 def editar_post(request,id):
     post=Post.objects.get(id=id)
     if (request.user.id == post.autor.id) or request.user.is_superuser:
@@ -55,7 +66,6 @@ def editar_post(request,id):
 
             form=PostEditForm(request.POST, request.FILES)
 
-            print(form)
             if form.is_valid():
                 info=form.cleaned_data
                 post.titulo=info["titulo"]           
@@ -74,6 +84,7 @@ def editar_post(request,id):
     else:
         return render(request, "editar_post.html", {"mensaje":"Usted no es el Autor de este Post.", "post":post})
 
+@login_required
 def eliminar_post(request, id):
     post=Post.objects.get(id=id)
     if (request.user.id == post.autor.id) or request.user.is_superuser:

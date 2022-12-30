@@ -21,4 +21,7 @@ class Post(models.Model):
     ("Varios", "Varios"),
     )
 
-    categoria = models.CharField(max_length=9, choices=Categorias, default="VARIOS")
+    categoria = models.CharField(max_length=9, choices=Categorias, default="Varios")
+
+    def __str__(self):
+        return self.titulo + " -  Autor: " + self.autor.username

@@ -1,0 +1,21 @@
+.boton-categoria {
+    background: #f5f8f9;
+    display: inline-block;
+    padding: 8px 23px;
+    border-radius: 38px;
+    margin-bottom: 10px;
+    border: 1px solid #eee;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+
+.boton-categoria:focus, .boton-categoria:hover {
+    color: #f75757;
+    text-decoration: none;
+}
+
+.grid-categoria{
+    display: grid;
+    gap: 1px;
+    grid-template-columns: repeat(3, 1fr)
+}

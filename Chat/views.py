@@ -3,6 +3,7 @@ from Chat.forms import ChatForm
 from .models import Mensaje
 from datetime import datetime
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 #Definciones de Funciones
 def ObtenerUsuarios(chats,Userid):
@@ -13,7 +14,7 @@ def ObtenerUsuarios(chats,Userid):
     usuarios = list()
     for elemento in lista_mensajes:
         elemento = list(elemento)
-        if elemento[1] == Userid: # si user ees el receptor, guardo id emisor
+        if elemento[1] == Userid: # si user es el receptor, guardo id emisor
             usuarios.append(elemento[0])
         else:
             if elemento[1] not in usuarios: # si user es emisor guardo el id del receptor solo si no esta guardado
@@ -28,7 +29,7 @@ def MarcarLeidos(mensajes):
 
 
 # Create your views here.
-
+@login_required
 def inicio(request):
     
     chats = Mensaje.objects.filter(emisor__id__icontains=request.user.id) | Mensaje.objects.filter(receptor__id__icontains=request.user.id) #Obtengo todos los chats que involucran al user
@@ -48,10 +49,7 @@ def inicio(request):
             #Obtengo nombre del user que estoy charlando
             usuario_chat = User.objects.filter(id = receptor_id).first()
 
-            #Obtengo el historial de charla con el user
-            #historial = Mensaje.objects.filter(emisor__id=request.user.id, receptor__id = receptor_id)
-            #historial |= Mensaje.objects.filter(emisor__id=receptor_id, receptor__id=request.user.id)
-
+            #Obtengo el historial de charla con el user y marco los msj recibidos como leidos
             historial = Mensaje.objects.filter(emisor__id=receptor_id, receptor__id=request.user.id) #mensajes recibidos
             historial = MarcarLeidos(historial)
             historial |= Mensaje.objects.filter(emisor__id=request.user.id, receptor__id = receptor_id) #agrego mensajes recibidos
@@ -64,7 +62,7 @@ def inicio(request):
     else:
         return render(request , "inicio_chat.html")
 
-
+@login_required
 def nuevochat(request):
     if request.method=="POST":
         form=ChatForm(request.POST)
@@ -80,6 +78,7 @@ def nuevochat(request):
         form=ChatForm()
         return render(request , "nuevo_chat.html", {"form": form})
 
+@login_required
 def enviarmsj(request):
     if request.method=="POST":
         receptor = User.objects.filter(id = request.POST['receptor']).first()
