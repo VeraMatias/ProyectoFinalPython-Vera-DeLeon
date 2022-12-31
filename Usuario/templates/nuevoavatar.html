@@ -1,0 +1,24 @@
+{% extends "padre.html" %}
+
+{% block contenido %}
+
+<h1>Cambio de avatar de {{ usuario.username }} </h1>
+
+<form action="{% url '_newavatar'  %}" method="POST"  enctype="multipart/form-data"> {% csrf_token %}
+
+    <table>
+    
+        {{ formulario.as_table }}
+    
+    </table>
+    
+    <form class="form-lg-inline my-2 my-md-0 ml-lg-4 text-center">
+    <input type="submit" class="btn btn-solid-border btn-round-full" value= "CAMBIAR AVATAR">
+    </form>
+    
+</form>
+
+
+    
+
+{% endblock %}

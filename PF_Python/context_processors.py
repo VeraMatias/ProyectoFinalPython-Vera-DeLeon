@@ -20,3 +20,4 @@ def ObtenerAvatar(request):
         imagen="../../media/avatares/avatarpordefecto.png"
 
         return {"avatar":imagen}
+
