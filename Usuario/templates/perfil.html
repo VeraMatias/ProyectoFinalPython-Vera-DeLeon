@@ -2,9 +2,64 @@
 
 {% block contenido %}
 
-<h1>Este es el perfil de {{ user.username }} </h1>
+<h1>¡Bienvenido al perfil de {{usuario}}! </h1>
 
-<a class="btn btn-solid-border btn-round-full" href="{% url '_crearpost' %}">Chat</a>
+<div class="sidebar-widget card border-0 mb-3">
+    <img src="{{perfil_avatar}}" alt="" class="img-fluid">
+    <div class="card-body p-4 text-center">
+        <h5 class="mb-0 mt-4">Nombre: {{usuario.first_name}}</h5>
+        <h5 class="mb-0 mt-4">Apellido: {{usuario.last_name}}</h5>
+        <p>Usuario desde {{usuario.date_joined|date:'Y'}}</p>
+
+        <p>{{info_extra.descripcion}}</p>
+
+
+        <ul class="list-inline author-socials">
+            <li class="list-inline-item mr-3">
+                <a href="{{info_extra.facebook}}" target="_blank" ><i class="fab fa-facebook-f text-muted"></i></a>
+            </li>
+            <li class="list-inline-item mr-3">
+                <a href="{{info_extra.twitter}}" target="_blank"><i class="fab fa-twitter text-muted"></i></a>
+            </li>
+            <li class="list-inline-item mr-3">
+                <a href="{{info_extra.linkedin}}" target="_blank"><i class="fab fa-linkedin-in text-muted"></i></a>
+            </li>
+        </ul>
+        {%if user == usuario %}
+        <a class="btn btn-small btn-main btn-round-full" href="{% url '_editarpassword' %}">Editar Contraseña</a>
+            <a class="btn btn-small btn-main btn-round-full" href="{% url '_editarusuario' %}">Editar Perfil</a>
+            <a class="btn btn-small btn-main btn-round-full" href="{% url '_editaravatar' %}">Editar Avatar</a>
+        {%endif%}
+    </div>
+    <h1 style="padding-left: 5px;">Posteos de {{usuario}} </h1>
+    <section>
+        <div class="container" >
+            <div class="row">
+            {%if posteos%}
+            {% for posteo in posteos %}
+            <div class="col-lg-6 col-md-6 mb-5" >
+                <div class="blog-item">
+                    <img src="/{{ posteo.imagen }}" onerror="this.src='/media/defecto.jpg';" class="img-fluid rounded" style="object-fit: cover; object-position: center; width: 100%;height: 200px;">
+                    <div class="blog-item-content bg-white p-5">
+                        <div class="blog-item-meta bg-gray py-1 px-2">
+                            <span class="text-muted text-capitalize mr-3"><i class="ti-pencil-alt mr-2"></i>{{posteo.autor}}</span>
+                            <span class="text-black text-capitalize mr-3"><i class="ti-time mr-1"></i>{{posteo.fecha|date:'Y-m-d'}}</span>
+                        </div> 
+                        <h3 class="mt-3 mb-3"><a href="{% url '_post' posteo.id %}">{{posteo.titulo}}</a></h3>
+                        <p class="mb-4">{{posteo.subtitulo}}</p>
     
+                        <a href="{% url '_post' posteo.id %}" class="btn btn-small btn-main btn-round-full">Leer Mas</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}   
+            {%else%}
+                <h3> No existen Posteos.</h3>
+            {%endif%}
+    </div>
+    
+    </section> 
+</div>
+
 
 {% endblock %}

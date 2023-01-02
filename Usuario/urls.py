@@ -6,7 +6,8 @@ urlpatterns = [
     path("registro/", register, name="_registro"),
     path("ingreso/", login_request, name="_ingreso"),
     path('logout/', LogoutView.as_view(template_name='index.html'), name='_logout'),
-    path('perfil/', perfil, name='_perfil'),
-    
-
+    path('perfil/<id>', perfil, name='_perfil'),
+    path('editaravatar/', editar_avatar, name="_editaravatar"),
+    path('editarperfil/', editar_perfil, name="_editarusuario"),
+    path('editarpassword/', editar_password, name="_editarpassword"),
 ]
