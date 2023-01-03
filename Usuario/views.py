@@ -1,11 +1,8 @@
-from itertools import chain
 from django.shortcuts import redirect, render
 
 from Blog.models import Post
 from .forms import *
-from django.http import HttpResponse
 from .models import *
-#from Blog.views import inicio
 
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
@@ -27,7 +24,7 @@ def register(request):
             usuario=authenticate(username=username, password=clave)    
             login(request, usuario)
 
-            return render(request, "index.html", {"mensaje":f"Usuario {username} creado correctamente"})
+            return redirect('/')
         else:
             return render(request, "registrousuario.html", {"form":form, "mensaje":"Error al crear el usuario"})
         
@@ -45,9 +42,9 @@ def login_request(request):
             usuario=authenticate(username=usu, password=clave)#trae un usuario de la base, que tenga ese usuario y ese pass, si existe, lo trae y si no None
             if usuario is not None:    
                 login(request, usuario)
-                return render(request, 'index.html', {'mensaje':f"Bienvenido {usuario}" })
+                return redirect('/')
             else:
-                return render(request, 'index.html', {'mensaje':"Usuario o contraseña incorrectos", 'form':form})
+                return redirect('/')
 
         else:
             return render(request, 'ingresousuario.html', {'mensaje':"Usuario o contraseña incorrectos", 'form':form})
@@ -115,8 +112,6 @@ def editar_perfil(request):
             usuario.save()
 
             #Informacion en modelo InfoExtra
-            print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-            print(info_extra)
             if info_extra != "" :
                 info_extra.usuario = request.user
                 info_extra.descripcion=info["descripcion"]
@@ -158,11 +153,17 @@ def editar_password(request):
             if check_password(info["password_antiguo"],request.user.password):
                 usuario.set_password(info["password1"])
                 usuario.save()
-                print(request.user.password)
-                lista=Avatar.objects.filter(user=usuario)
-                imagen=lista[0].imagen.url
 
-                return render(request, "perfil.html",{"usuario": request.user, "perfil_avatar":imagen})
+                #Obtencion de avatar para render
+                lista=Avatar.objects.filter(user=usuario)
+                if len(lista)!=0:
+                    imagen=lista[0].imagen.url
+                else:
+                    imagen="../../media/avatares/avatarpordefecto.png"
+
+                #Obtencion de posteos para render
+                posteos=Post.objects.filter(autor=usuario).order_by('-fecha')
+                return render(request, "perfil.html",{"usuario": request.user, "perfil_avatar":imagen, "posteos":posteos})
             else:
                 return render(request, "editarpassword.html", {"form": form, "usuario": request.user, "mensaje": "Password actual incorrecto"})
         else:

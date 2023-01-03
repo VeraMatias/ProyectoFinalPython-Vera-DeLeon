@@ -14,11 +14,12 @@
                     <a class="btn btn-solid-border btn-round-full" href="{% url '_nuevochat' %}">Nuevo Chat</a>
                 </div>
                 <ul class="list-unstyled chat-list mt-2 mb-0" style="width:auto; height:600px; overflow-y: scroll;">
-                    {% for usuario in usuarios %}
+                    
+                    {% for usuario, avatar in fusion %}
                         <li class="clearfix">
-                            <img src="{{avatar}}" alt="">
+                            <img src="{{ avatar }}" alt="hola">
                             <div class="about">
-                                <div class="name">{{usuario.username}}</div>                                           
+                                <div class="name">{{usuario.username}}</div>   
                             </div>
                         </li>
 
@@ -37,8 +38,8 @@
                     <div class="chat-header clearfix">
                         <div class="row">
                             <div class="col-lg-6">
-                                <a href="{% url '_inicio' %}" data-toggle="modal" data-target="#view_info">
-                                    <img src="{{avatar}}" alt="avatar">
+                                <a href="{% url '_perfil' usuario_chat.id %}" data-toggle="modal" data-target="#view_info">
+                                    <img src="{{avatar_chat}}" alt="avatar">
                                 </a>
                                 <div class="chat-about">
                                     <h6 class="m-b-0">{{usuario_chat}}</h6>
@@ -55,7 +56,7 @@
                                 <li class="clearfix">
                                     <div class="message-data text-right">
                                         <span class="message-data-time">{{mensaje.fecha}}</span>
-                                        <img src="{{avatar}}" alt="">
+                                        <img src="{{avatar_chat}}" alt="">
                                     </div>
                                     <div class="message other-message float-right"> {{mensaje.mensaje}} </div>
                                 </li>
