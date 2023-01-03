@@ -19,3 +19,13 @@
     gap: 1px;
     grid-template-columns: repeat(3, 1fr)
 }
+
+.sobre-nosotros-img{
+    padding-top: 20px;
+    border-radius: 50%;
+    height: 300px; 
+    object-fit: cover; 
+    object-position: center; 
+    width: 300px;
+    align-self: center;
+}

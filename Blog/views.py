@@ -92,3 +92,6 @@ def eliminar_post(request, id):
         return redirect('/')
     else:
         return redirect('/')
+
+def sobre_nosotros(request):
+    return render(request, "sobrenosotros.html")

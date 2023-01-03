@@ -9,4 +9,5 @@ urlpatterns = [
     path("editar_post/<id>", editar_post, name="_editarpost"),
     path("eliminar_post/<id>", eliminar_post, name="_eliminarpost"),
     path("buscar_categoria/", buscar_categoria, name="_buscarcategoria"),
+    path("sobrenosotros/", sobre_nosotros, name="_sobrenosotros"),
 ]

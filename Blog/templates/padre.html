@@ -51,7 +51,7 @@
 			<li class="nav-item active">
 				<a class="nav-link" href="{% url '_inicio' %}">Inicio <span class="sr-only">(current)</span></a>
 			</li>
-			<li class="nav-item"><a class="nav-link" href="service.html">Sobre Nosotros</a></li>
+			<li class="nav-item"><a class="nav-link" href="{% url '_sobrenosotros' %}">Sobre Nosotros</a></li>
 			
 			{% if user.is_authenticated %}
 				<li class="nav-item"><a class="nav-link" href="{% url '_iniciochat' %}">CHAT</a></li>

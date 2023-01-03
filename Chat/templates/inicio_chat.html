@@ -2,7 +2,7 @@
 
 {% block contenido %}
 
-<h1>CHAT</h1>
+<h1 style="text-align: center;">Sistema de Chat</h1>
 
 
 <div class="container">
@@ -11,33 +11,26 @@
         <div class="card chat-app" style="height: 700px; width: auto;">
             <div id="plist" class="people-list">
                 <div class="input-group">
-                    <a class="btn btn-solid-border btn-round-full" href="{% url '_nuevochat' %}">Nuevo Chat</a>
+                    <a class="btn btn-solid-border btn-round-full" href="{% url '_nuevochat' %}" style="width: 100%;">Nuevo Chat</a>
                 </div>
                 <ul class="list-unstyled chat-list mt-2 mb-0" style="width:auto; height:600px; overflow-y: scroll;">
                     
                     {% for usuario, avatar in fusion %}
-                        <li class="clearfix">
-                            <img src="{{ avatar }}" alt="hola">
-                            <div class="about">
-                                <div class="name">{{usuario.username}}</div>   
-                            </div>
-                        </li>
-
                         <li>
                             <form action="{% url '_iniciochat' %}" method="POST"> {% csrf_token %}
                                 <input id = "receptor_id" name="receptor_id" type="text" value="{{usuario.id}}" style="display: none;">
-                                <input type="submit" class="btn btn-solid-border btn-round-full" value="chats">
+                                <input type="submit" class="btn btn-solid-border btn-round-full" value="{{usuario.username}}" style="background-image: url({{avatar}}); background-position: left;background-repeat: no-repeat; background-size:contain; padding-left: 70px; width: 100%;">
                             </form>
                         </li>
                     {% endfor %}
                 </ul>
             </div>
             
-            <div class="chat">
+            <div class="chat" style="width:auto; height:600px; overflow-y: scroll;">
                 {% if historial %}
                     <div class="chat-header clearfix">
                         <div class="row">
-                            <div class="col-lg-6">
+                            <div class="col-lg-6" style="display: flex;">
                                 <a href="{% url '_perfil' usuario_chat.id %}" data-toggle="modal" data-target="#view_info">
                                     <img src="{{avatar_chat}}" alt="avatar">
                                 </a>
@@ -76,20 +69,16 @@
                     </div>
                     {% endfor %}
                     <div class="chat-message clearfix">
-                        <div class="input-group mb-0">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-send"></i></span>
-                            </div>
+                        <div >
                             <form action="{% url '_enviarmsj' %}" method="POST"> {% csrf_token %}
                                 <input id = "receptor" name="receptor" type="text" value="{{usuario_chat.id}}" style="display: none;">
-                                <input id = "mensaje" name = "mensaje" type="text" class="form-control" placeholder="Enter text here...">  
-                                <input type="submit" class="btn btn-solid-border btn-round-full" value="Enviar">                               
+                                <input id = "mensaje" name = "mensaje" type="text" class="form-control" placeholder="Ingrese Texto a enviar" style="width: 100%;">  
+                                <input type="submit" style=" display: none;" value="Enviar">                               
                             </form>                                    
                         </div>
                     </div>
                 {% endif %}
             </div>
-            
         </div>
     </div>
 </div>

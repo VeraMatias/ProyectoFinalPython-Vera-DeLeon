@@ -15,18 +15,24 @@
 
 
         <ul class="list-inline author-socials">
+            {% if info_extra.facebook%}
             <li class="list-inline-item mr-3">
                 <a href="{{info_extra.facebook}}" target="_blank" ><i class="fab fa-facebook-f text-muted"></i></a>
             </li>
+            {%endif%}
+            {% if info_extra.twitter%}
             <li class="list-inline-item mr-3">
                 <a href="{{info_extra.twitter}}" target="_blank"><i class="fab fa-twitter text-muted"></i></a>
             </li>
+            {%endif%}
+            {% if info_extra.linkedin%}
             <li class="list-inline-item mr-3">
                 <a href="{{info_extra.linkedin}}" target="_blank"><i class="fab fa-linkedin-in text-muted"></i></a>
             </li>
+            {%endif%}
         </ul>
-        {%if user == usuario %}
-        <a class="btn btn-small btn-main btn-round-full" href="{% url '_editarpassword' %}">Editar Contraseña</a>
+        {%if user == usuario or user.is_superuser%}
+            <a class="btn btn-small btn-main btn-round-full" href="{% url '_editarpassword' %}">Editar Contraseña</a>
             <a class="btn btn-small btn-main btn-round-full" href="{% url '_editarusuario' %}">Editar Perfil</a>
             <a class="btn btn-small btn-main btn-round-full" href="{% url '_editaravatar' %}">Editar Avatar</a>
         {%endif%}
