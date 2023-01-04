@@ -15,3 +15,6 @@ class InfoExtra(models.Model):
     facebook = models.URLField(max_length=200)
     twitter = models.URLField(max_length=200)
     linkedin = models.URLField(max_length=200)
+
+    def __str__(self):
+        return f"User: {self.usuario.username}"

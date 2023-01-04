@@ -31,7 +31,7 @@
             </li>
             {%endif%}
         </ul>
-        {%if user == usuario or user.is_superuser%}
+        {%if user == usuario%}
             <a class="btn btn-small btn-main btn-round-full" href="{% url '_editarpassword' %}">Editar Contraseña</a>
             <a class="btn btn-small btn-main btn-round-full" href="{% url '_editarusuario' %}">Editar Perfil</a>
             <a class="btn btn-small btn-main btn-round-full" href="{% url '_editaravatar' %}">Editar Avatar</a>
@@ -55,6 +55,11 @@
                         <p class="mb-4">{{posteo.subtitulo}}</p>
     
                         <a href="{% url '_post' posteo.id %}" class="btn btn-small btn-main btn-round-full">Leer Mas</a>
+                        {% if user == posteo.autor %}
+                        <a class="btn btn-small btn-main btn-round-full" href="{% url '_editarpost' posteo.id %}"style="background-color: green;">Editar</a>
+                        <a class="btn btn-small btn-main btn-round-full" href="{% url '_eliminarpost' posteo.id %}"style="background-color: green;">Eliminar</a>
+                        {% endif %}
+                        
                     </div>
                 </div>
             </div>
